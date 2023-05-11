@@ -13,11 +13,9 @@ export class ClubsService {
   }
 
   async findAll(): Promise<Club[]> {
-    const clubs = await this.clubModel.find().sort({
+    return await this.clubModel.find().sort({
       _id: 'desc',
     }).exec();
-    console.log(clubs);
-    return clubs;
   }
 
   async seed(): Promise<Club[]> {

@@ -1,7 +1,6 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { Organization } from "@organizations/models/schemas/organization.schema";
 import mongoose from "mongoose";
-import { Category } from "@categories/models/schema/category.schema";
+import { Club } from "@clubs/models/schemas/club.schema";
 
 @Schema({
     versionKey: false,
@@ -16,7 +15,7 @@ import { Category } from "@categories/models/schema/category.schema";
         },
     },
 })
-export class Club {
+export class Category {
     @Prop({
         type: String,
         required: true,
@@ -24,24 +23,16 @@ export class Club {
     name: string;
 
     @Prop({
-        type: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Organization",
-        },
-    })
-    organization?: Organization;
-
-    @Prop({
         type: [
             {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: 'Category',
+                ref: 'Club',
             },
         ],
     })
-    categories?: Category[];
+    clubs?: Club[];
 }
 
-export const ClubSchema = SchemaFactory.createForClass(Club);
+export const CategorySchema = SchemaFactory.createForClass(Category);
 
-export type ClubDocument = Club & Document;
+export type CategoryDocument = Category & Document;

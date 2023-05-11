@@ -8,6 +8,7 @@ import { JwtModule, JwtService } from "@nestjs/jwt";
 import { jwtOptions } from "@constants/jwt-constants";
 import { OrganizationsModule } from '@organizations/organizations.module';
 import { ClubsModule } from '@clubs/clubs.module';
+import { CategoriesModule } from './categories/categories.module';
 
 @Module({
     imports: [
@@ -17,6 +18,7 @@ import { ClubsModule } from '@clubs/clubs.module';
         JwtModule.register(jwtOptions),
         OrganizationsModule,
         ClubsModule,
+        CategoriesModule,
     ],
     controllers: [ AppController ],
     providers: [ AppService, JwtService ],

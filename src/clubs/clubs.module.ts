@@ -5,12 +5,13 @@ import { MongooseModule } from "@nestjs/mongoose";
 import { Club, ClubSchema } from "./models/schemas/club.schema";
 
 @Module({
-  imports: [
-      MongooseModule.forFeature([
+    imports: [
+        MongooseModule.forFeature([
             { name: Club.name, schema: ClubSchema },
-      ]),
-  ],
-  controllers: [ClubsController],
-  providers: [ClubsService]
+        ]),
+    ],
+    controllers: [ ClubsController ],
+    providers: [ ClubsService ],
 })
-export class ClubsModule {}
+export class ClubsModule {
+}

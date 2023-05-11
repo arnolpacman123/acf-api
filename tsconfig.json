@@ -30,6 +30,9 @@
       "@clubs/*": [
         "src/clubs/*"
       ],
+      "@categories/*": [
+        "src/categories/*"
+      ],
       "@guards/*": [
         "src/guards/*"
       ],
