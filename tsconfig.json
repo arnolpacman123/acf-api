@@ -19,28 +19,31 @@
     "noFallthroughCasesInSwitch": false,
     "paths": {
       "@users/*": [
-        "src/users/*"
+        "src/modules/users/*"
       ],
       "@championships/*": [
-        "src/championships/*"
+        "src/modules/championships/*"
       ],
       "@organizations/*": [
-        "src/organizations/*"
+        "src/modules/organizations/*"
       ],
       "@clubs/*": [
-        "src/clubs/*"
+        "src/modules/clubs/*"
       ],
       "@categories/*": [
-        "src/categories/*"
+        "src/modules/categories/*"
+      ],
+      "@core/*": [
+        "src/core/*"
       ],
       "@guards/*": [
-        "src/guards/*"
+        "src/core/guards/*"
       ],
       "@strategies/*": [
-        "src/strategies/*"
+        "src/core/strategies/*"
       ],
       "@constants/*": [
-        "src/constants/*"
+        "src/core/constants/*"
       ]
     }
   }
