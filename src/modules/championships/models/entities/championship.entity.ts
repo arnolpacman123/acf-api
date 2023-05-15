@@ -18,7 +18,7 @@ export class ChampionshipEntity {
     description: string;
 
     @Column({
-        type: 'date',
+        type: 'timestamp',
         name: 'start_date'
     })
     startDate: Date;
