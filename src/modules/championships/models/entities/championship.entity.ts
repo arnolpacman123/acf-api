@@ -20,6 +20,12 @@ export class ChampionshipEntity {
     @Column({
         type: 'timestamp with time zone',
         name: 'start_date',
+        transformer: {
+            from: (value: Date) => {
+                return value.toISOString();
+            },
+            to: (value: Date) => value,
+        },
     })
     startDate: Date;
 
