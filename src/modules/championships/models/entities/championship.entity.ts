@@ -18,11 +18,11 @@ export class ChampionshipEntity {
     description: string;
 
     @Column({
-        type: 'timestamp with time zone',
+        type: 'timestamp without time zone',
         name: 'start_date',
         transformer: {
             from: (value: Date) => {
-                return value.toISOString();
+                return value.toISOString().split('T')[0];
             },
             to: (value: Date) => value,
         },
