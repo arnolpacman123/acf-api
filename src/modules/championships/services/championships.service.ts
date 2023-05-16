@@ -20,8 +20,6 @@ export class ChampionshipsService {
     async seed(): Promise<ChampionshipEntity[]> {
         const championships: ChampionshipEntity[] = [];
         for (let i = 0; i < 14; i++) {
-            const startDate = new Date(`20${ 10 + i }-01-01`);
-            console.log(startDate);
 
             const championship: ChampionshipEntity = {
                 name: `Campeonato ACF 20${ 10 + i }`,
