@@ -18,7 +18,7 @@ export class ChampionshipEntity {
     description: string;
 
     @Column({
-        type: 'timestamp without time zone',
+        type: 'timestamp with time zone',
         name: 'start_date',
         transformer: {
             from: (value: Date) => {
