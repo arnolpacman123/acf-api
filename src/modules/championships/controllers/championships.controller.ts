@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { ChampionshipsService } from "@championships/services/championships.service";
 import { JwtAuthGuard } from "@guards/jwt-auth.guard";
 import { ChampionshipRegisterDto } from "@championships/models/dto/championship-register.dto";
@@ -14,6 +14,13 @@ export class ChampionshipsController {
     @Get()
     async findAll() {
         return await this.championshipsService.findAll();
+    }
+
+    @Get(':id')
+    async findOne(
+        @Param('id') id: number,
+    ) {
+        return await this.championshipsService.findOne(+id);
     }
 
     @Post()

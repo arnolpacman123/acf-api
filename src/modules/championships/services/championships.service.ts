@@ -35,4 +35,12 @@ export class ChampionshipsService {
     async create(championshipRegisterDto: ChampionshipRegisterDto): Promise<ChampionshipEntity> {
         return await this.championshipRepository.save(championshipRegisterDto);
     }
+
+    async findOne(id: number) {
+        return await this.championshipRepository.findOne({
+            where: {
+                id,
+            }
+        });
+    }
 }
