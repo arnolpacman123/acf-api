@@ -42,8 +42,15 @@ export class ChampionshipsService {
     return await this.championshipRepository.save(championshipCreateDto);
   }
 
-  async update(id: number, championshipUpdateDto: ChampionshipUpdateDto) {
-    return await this.championshipRepository.update(id, championshipUpdateDto);
+  async update(
+    id: number,
+    championshipUpdateDto: ChampionshipUpdateDto,
+  ): Promise<ChampionshipEntity> {
+    const championship: ChampionshipEntity = await this.findOne(id);
+    championship.name = championshipUpdateDto.name;
+    championship.description = championshipUpdateDto.description;
+    championship.startDate = championshipUpdateDto.startDate;
+    return await this.championshipRepository.save(championship);
   }
 
   async findOne(id: number) {

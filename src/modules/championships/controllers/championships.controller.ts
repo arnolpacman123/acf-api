@@ -34,16 +34,17 @@ export class ChampionshipsController {
     return await this.championshipsService.create(championshipCreateDto);
   }
 
+  
+  @Get('seed')
+  async seed() {
+    return await this.championshipsService.seed();
+  }
+
   @Put(':id')
   async update(
     @Param('id') id: number,
     @Body() championshipUpdateDto: ChampionshipUpdateDto,
   ) {
     return await this.championshipsService.update(+id, championshipUpdateDto);
-  }
-
-  @Get('seed')
-  async seed() {
-    return await this.championshipsService.seed();
   }
 }
