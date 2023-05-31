@@ -14,7 +14,11 @@ export class ChampionshipsService {
     }
 
     async findAll(): Promise<ChampionshipEntity[]> {
-        return await this.championshipRepository.find();
+        return await this.championshipRepository.find({
+            order: {
+                id: 'DESC',
+            },
+        });
     }
 
     async seed(): Promise<ChampionshipEntity[]> {
