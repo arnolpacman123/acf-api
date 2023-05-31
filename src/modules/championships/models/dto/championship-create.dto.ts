@@ -1,6 +1,6 @@
 import { IsDateString, IsNotEmpty, IsString } from "class-validator";
 
-export class ChampionshipRegisterDto {
+export class ChampionshipCreateDto {
     @IsNotEmpty()
     @IsString()
     name: string;
