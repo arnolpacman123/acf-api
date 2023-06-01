@@ -1,7 +1,9 @@
+import { RegisteredTeamEntity } from '@registered-teams/models/entities/registered-team.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -44,4 +46,10 @@ export class ChampionshipEntity {
     name: 'updated_at',
   })
   updatedAt?: Date;
+
+  @OneToMany(
+    () => RegisteredTeamEntity,
+    (registeredTeam) => registeredTeam.championship,
+  )
+  registeredTeams?: RegisteredTeamEntity[];
 }

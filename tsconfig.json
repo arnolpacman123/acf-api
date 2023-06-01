@@ -36,6 +36,9 @@
       "@clubs-categories/*": [
         "src/modules/clubs-categories/*"
       ],
+      "@registered-teams/*": [
+        "src/modules/registered-teams/*"
+      ],
       "@core/*": [
         "src/core/*"
       ],

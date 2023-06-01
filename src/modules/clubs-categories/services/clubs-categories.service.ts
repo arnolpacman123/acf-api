@@ -5,6 +5,8 @@ import { In } from 'typeorm';
 import { ClubRepository } from '@clubs/models/repositories/club.repository';
 import { CategoryRepository } from '@categories/models/repositories/category.repository';
 import { ClubCategoryRepository } from '@clubs-categories/models/repositories/club-category.repository';
+import { CategoryEntity } from '@categories/models/entities/category.entity';
+import { ClubEntity } from '@clubs/models/entities/club.entity';
 
 @Injectable()
 export class ClubsCategoriesService {
@@ -19,7 +21,7 @@ export class ClubsCategoriesService {
     return await this.clubCategoryRepository.find();
   }
 
-  async findAllCategoryByClubId(clubId: number) {
+  async findAllCategoryByClubId(clubId: number): Promise<CategoryEntity[]> {
     const categoriesClub = await this.clubCategoryRepository.find({
       where: {
         club: {
@@ -34,7 +36,7 @@ export class ClubsCategoriesService {
     });
   }
 
-  async findAllClubsByCategoryId(categoryId: number) {
+  async findAllClubsByCategoryId(categoryId: number): Promise<ClubEntity[]> {
     const clubsCategory = await this.clubCategoryRepository.find({
       where: {
         category: {
@@ -49,7 +51,10 @@ export class ClubsCategoriesService {
     });
   }
 
-  async addClubsToCategory(clubsNames: string[], categoryName: string) {
+  async addClubsToCategory(
+    clubsNames: string[],
+    categoryName: string,
+  ): Promise<ClubCategoryEntity[]> {
     const clubs = await this.clubRepository.findBy({
       name: In(clubsNames),
     });
@@ -70,7 +75,7 @@ export class ClubsCategoriesService {
     return await this.clubCategoryRepository.save(clubsCategories);
   }
 
-  async seed() {
+  async seed(): Promise<ClubCategoryEntity[]> {
     const clubsSub19: string[] = [
       '24 DE SEPTIEMBRE',
       'ADOLFO FLORES',
