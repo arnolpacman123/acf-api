@@ -49,5 +49,6 @@ export class RegisteredTeamsService {
     }
 
     return await this.registeredTeamRepository.save(registeredTeams);
+    
   }
 }
