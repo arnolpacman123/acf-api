@@ -19,14 +19,6 @@ export class ChampionshipsService {
       order: {
         id: 'DESC',
       },
-      relations: {
-        registeredTeams: {
-          clubCategory: {
-            club: true,
-            category: true,
-          },
-        },
-      },
     });
 
     return championships.map((championship) => {
@@ -40,6 +32,32 @@ export class ChampionshipsService {
         }),
       };
     });
+  }
+
+  async findOne(id: number) {
+    const championship = await this.championshipRepository.findOne({
+      where: {
+        id,
+      },
+      relations: {
+        registeredTeams: {
+          clubCategory: {
+            club: true,
+            category: true,
+          },
+        },
+      },
+    });
+
+    const { registeredTeams, ...rest } = championship;
+
+    return {
+      ...rest,
+      registeredTeams: registeredTeams.map((registeredTeam) => {
+        const { clubCategory } = registeredTeam;
+        return clubCategory;
+      }),
+    };
   }
 
   async seed(): Promise<ChampionshipEntity[]> {
@@ -76,31 +94,5 @@ export class ChampionshipsService {
     championship.description = championshipUpdateDto.description;
     championship.startDate = championshipUpdateDto.startDate;
     return await this.championshipRepository.save(championship);
-  }
-
-  async findOne(id: number) {
-    const championship = await this.championshipRepository.findOne({
-      where: {
-        id,
-      },
-      relations: {
-        registeredTeams: {
-          clubCategory: {
-            club: true,
-            category: true,
-          },
-        },
-      },
-    });
-
-    const { registeredTeams, ...rest } = championship;
-
-    return {
-      ...rest,
-      registeredTeams: registeredTeams.map((registeredTeam) => {
-        const { clubCategory } = registeredTeam;
-        return clubCategory;
-      }),
-    };
   }
 }
