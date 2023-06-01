@@ -14,6 +14,28 @@ export class RegisteredTeamsController {
     return await this.registeredTeamsService.findAll();
   }
 
+  @Get('club/:clubName/championship/:championshipId')
+  async findAllByClubNameAndChampionshipId(
+    @Param('clubName') clubName: string,
+    @Param('championshipId') championshipId: number,
+  ) {
+    return await this.registeredTeamsService.findAllByClubNameAndChampionshipId(
+      clubName,
+      +championshipId,
+    );
+  }
+
+  @Get('category/:categoryName/championship/:championshipId')
+  async findAllByCategoryNameAndChampionshipId(
+    @Param('categoryName') categoryName: string,
+    @Param('championshipId') championshipId: number,
+  ) {
+    return await this.registeredTeamsService.findAllByCategoryNameAndChampionshipId(
+      categoryName,
+      +championshipId,
+    );
+  }
+
   @Get('seed')
   async seed() {
     return await this.registeredTeamsService.seed();

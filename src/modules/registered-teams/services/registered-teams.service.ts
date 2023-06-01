@@ -8,7 +8,7 @@ import { RegisteredTeamRepository } from '@registered-teams/models/repositories/
 export class RegisteredTeamsService {
   constructor(
     private readonly registeredTeamRepository: RegisteredTeamRepository,
-    private readonly ClubCategoryRepository: ClubCategoryRepository,
+    private readonly clubCategoryRepository: ClubCategoryRepository,
     private readonly championshipRepository: ChampionshipRepository,
   ) {}
 
@@ -32,8 +32,84 @@ export class RegisteredTeamsService {
     });
   }
 
+  async findAllByClubNameAndChampionshipId(
+    clubName: string,
+    championshipId: number,
+  ) {
+    const championship = await this.championshipRepository.findOne({
+      where: {
+        id: championshipId,
+      },
+    });
+
+    const registeredTeams = await this.registeredTeamRepository.find({
+      where: {
+        championship: {
+          id: championship.id,
+        },
+        clubCategory: {
+          club: {
+            name: clubName,
+          },
+        },
+      },
+      relations: {
+        clubCategory: {
+          category: true,
+          club: true,
+        },
+      },
+    });
+
+    return {
+      ...championship,
+      registeredTeams: registeredTeams.map((registeredTeam) => {
+        const { clubCategory } = registeredTeam;
+        return clubCategory;
+      }),
+    };
+  }
+
+  async findAllByCategoryNameAndChampionshipId(
+    categoryName: string,
+    championshipId: number,
+  ) {
+    const championship = await this.championshipRepository.findOne({
+      where: {
+        id: championshipId,
+      },
+    });
+
+    const registeredTeams = await this.registeredTeamRepository.find({
+      where: {
+        championship: {
+          id: championship.id,
+        },
+        clubCategory: {
+          category: {
+            name: categoryName,
+          },
+        },
+      },
+      relations: {
+        clubCategory: {
+          category: true,
+          club: true,
+        },
+      },
+    });
+
+    return {
+      ...championship,
+      registeredTeams: registeredTeams.map((registeredTeam) => {
+        const { clubCategory } = registeredTeam;
+        return clubCategory;
+      }),
+    };
+  }
+
   async seed() {
-    const clubCategories = await this.ClubCategoryRepository.find();
+    const clubCategories = await this.clubCategoryRepository.find();
     const championships = await this.championshipRepository.find();
 
     const registeredTeams: RegisteredTeamEntity[] = [];
