@@ -28,11 +28,9 @@ export class ClubsCategoriesService {
       relations: ['category'],
     });
 
-    const categories = categoriesClub.map((categoryClub) => {
+    return categoriesClub.map((categoryClub) => {
       return categoryClub.category;
     });
-
-    return categories;
   }
 
   async findAllClubsByCategoryId(categoryId: number) {
@@ -45,11 +43,9 @@ export class ClubsCategoriesService {
       relations: ['club'],
     });
 
-    const clubs = clubsCategory.map((clubCategory) => {
+    return clubsCategory.map((clubCategory) => {
       return clubCategory.club;
     });
-
-    return clubs;
   }
 
   async addClubsToCategory(clubsNames: string[], categoryName: string) {
@@ -66,11 +62,9 @@ export class ClubsCategoriesService {
       };
     });
 
-    const clubsCategoriesSaved = await this.clubCategoryRepository.save(
-      clubsCategories,
+    return await this.clubCategoryRepository.save(
+        clubsCategories,
     );
-
-    return clubsCategoriesSaved;
   }
 
   async seed() {

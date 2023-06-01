@@ -33,20 +33,6 @@ export class CategoryEntity {
     })
     updatedAt?: Date;
 
-    // @ManyToMany(
-    //     () => ClubEntity, (club) => club.categories,
-    // )
-    // @JoinTable({
-    //     name: 'clubs_categories',
-    //     joinColumn: {
-    //         name: 'category_id',
-    //     },
-    //     inverseJoinColumn: {
-    //         name: 'club_id',
-    //     },
-    // })
-    // clubs?: ClubEntity[];
-
     @OneToMany(
         () => ClubCategoryEntity, (clubCategory) => clubCategory.category,
     )

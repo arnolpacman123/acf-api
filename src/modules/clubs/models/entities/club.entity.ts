@@ -21,7 +21,7 @@ export class ClubEntity {
   @Column({
     type: 'varchar',
   })
-  name: string;
+  name?: string;
 
   @ManyToOne(() => ClubEntity, (club) => club.organization)
   @JoinColumn({
@@ -29,11 +29,6 @@ export class ClubEntity {
     referencedColumnName: 'id',
   })
   organization?: OrganizationEntity;
-
-  // @ManyToMany(
-  //     () => CategoryEntity, (category) => category.clubs,
-  // )
-  // categories?: CategoryEntity[];
 
   @OneToMany(() => ClubCategoryEntity, (clubCategory) => clubCategory.club)
   clubCategories?: ClubCategoryEntity[];

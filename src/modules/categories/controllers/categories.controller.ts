@@ -14,9 +14,9 @@ export class CategoriesController {
         return await this.categoriesService.findAll();
     }
 
-    // @Get('seed')
-    // async seed() {
-    //     return await this.categoriesService.seed();
-    // }
+    @Get('seed')
+    async seed() {
+        return await this.categoriesService.seed();
+    }
 
 }
