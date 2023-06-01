@@ -17,11 +17,11 @@ export class ClubsCategoriesController {
 
   @Post('add-clubs-to-category')
   async addClubsToCategory(
-    @Body() addClubsToCategoryDto: AddClubsToCategoryDto,
+    @Body() { clubsNames, categoryName }: AddClubsToCategoryDto,
   ) {
     return await this.clubsCategoriesService.addClubsToCategory(
-      addClubsToCategoryDto.clubsNames,
-      addClubsToCategoryDto.categoryName,
+      clubsNames,
+      categoryName,
     );
   }
 

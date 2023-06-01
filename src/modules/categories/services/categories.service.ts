@@ -1,13 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { FindOptionsWhere, Repository } from 'typeorm';
-import { InjectRepository } from '@nestjs/typeorm';
 import { CategoryEntity } from '@categories/models/entities/category.entity';
+import { CategoryRepository } from '@categories/models/repositories/category.repository';
 
 @Injectable()
 export class CategoriesService {
   constructor(
-    @InjectRepository(CategoryEntity)
-    private readonly categoryRepository: Repository<CategoryEntity>,
+    private readonly categoryRepository: CategoryRepository,
   ) {}
 
   async findAll(): Promise<CategoryEntity[]> {
@@ -24,14 +22,6 @@ export class CategoriesService {
       const clubs = clubCategories.map((clubCategory) => clubCategory.club);
       return { ...rest, clubs };
     });
-  }
-
-  async findBy(
-    params:
-      | FindOptionsWhere<CategoryEntity>
-      | FindOptionsWhere<CategoryEntity>[],
-  ): Promise<CategoryEntity> {
-    return await this.categoryRepository.findOneBy(params);
   }
 
   async seed() {

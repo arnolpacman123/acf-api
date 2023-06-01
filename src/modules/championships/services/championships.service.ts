@@ -1,17 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ChampionshipEntity } from '@championships/models/entities/championship.entity';
-import { Repository } from 'typeorm';
 import {
   ChampionshipCreateDto,
   ChampionshipUpdateDto,
 } from '@championships/models/dto';
+import { ChampionshipRepository } from '@championships/models/repositories/championship.repository';
 
 @Injectable()
 export class ChampionshipsService {
   constructor(
     @InjectRepository(ChampionshipEntity)
-    private readonly championshipRepository: Repository<ChampionshipEntity>,
+    private readonly championshipRepository: ChampionshipRepository,
   ) {}
 
   async findAll(): Promise<ChampionshipEntity[]> {

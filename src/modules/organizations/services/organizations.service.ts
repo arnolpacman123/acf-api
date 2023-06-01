@@ -1,17 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { OrganizationRegisterDto } from '@organizations/models/dto/organization-register.dto';
-import { InjectRepository } from '@nestjs/typeorm';
 import { OrganizationEntity } from '@organizations/models/entities/organization.entity';
-import { Repository } from 'typeorm';
+import { In } from 'typeorm';
 import { ClubEntity } from '@clubs/models/entities/club.entity';
-import { ClubsService } from '@clubs/services/clubs.service';
+import { ClubRepository } from '@clubs/models/repositories/club.repository';
+import { OrganizationRepository } from '@organizations/models/repositories/organization.repository';
 
 @Injectable()
 export class OrganizationsService {
   constructor(
-    @InjectRepository(OrganizationEntity)
-    private readonly organizationRepository: Repository<OrganizationEntity>,
-    private readonly clubsService: ClubsService,
+    private readonly organizationRepository: OrganizationRepository,
+    private readonly clubRepository: ClubRepository,
   ) {}
 
   async findAll(): Promise<OrganizationEntity[]> {
@@ -37,9 +36,9 @@ export class OrganizationsService {
     const organization: OrganizationEntity = {
       name: organizationRegisterDto.name,
     };
-    const clubs = await this.clubsService.findByIds(
-      organizationRegisterDto.clubsIds,
-    );
+    const clubs = await this.clubRepository.findBy({
+      id: In(organizationRegisterDto.clubsIds),
+    });
     clubs.forEach((club: ClubEntity) => {
       club.organization = organization;
     });
@@ -57,7 +56,9 @@ export class OrganizationsService {
           id: organizationId,
         },
       });
-    const clubs = await this.clubsService.findByIds(clubsIds);
+    const clubs = await this.clubRepository.findBy({
+      id: In(clubsIds),
+    });
     clubs.forEach((club: ClubEntity) => {
       club.organization = organization;
     });

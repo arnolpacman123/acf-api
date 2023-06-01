@@ -1,17 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ClubCategoryEntity } from '@clubs-categories/models/entities/club-category.entity';
-import { Repository } from 'typeorm';
-import { ClubsService } from '@clubs/services/clubs.service';
-import { CategoriesService } from '@categories/services/categories.service';
+import { In } from 'typeorm';
+import { ClubRepository } from '@clubs/models/repositories/club.repository';
+import { CategoryRepository } from '@categories/models/repositories/category.repository';
+import { ClubCategoryRepository } from '@clubs-categories/models/repositories/club-category.repository';
 
 @Injectable()
 export class ClubsCategoriesService {
   constructor(
     @InjectRepository(ClubCategoryEntity)
-    private readonly clubCategoryRepository: Repository<ClubCategoryEntity>,
-    private readonly clubsService: ClubsService,
-    private readonly categoriesService: CategoriesService,
+    private readonly clubCategoryRepository: ClubCategoryRepository,
+    private readonly clubRepository: ClubRepository,
+    private readonly categoryRepository: CategoryRepository,
   ) {}
 
   async findAll() {
@@ -49,22 +50,24 @@ export class ClubsCategoriesService {
   }
 
   async addClubsToCategory(clubsNames: string[], categoryName: string) {
-    const clubs = await this.clubsService.findByNames(clubsNames);
-
-    const category = await this.categoriesService.findBy({
-      name: categoryName,
+    const clubs = await this.clubRepository.findBy({
+      name: In(clubsNames),
     });
 
-    const clubsCategories: ClubCategoryEntity[] = clubs.map((club) => {
+    const category = await this.categoryRepository.findOne({
+      where: {
+        name: categoryName,
+      },
+    });
+
+    const clubsCategories = clubs.map((club) => {
       return {
         club,
         category,
       };
     });
 
-    return await this.clubCategoryRepository.save(
-        clubsCategories,
-    );
+    return await this.clubCategoryRepository.save(clubsCategories);
   }
 
   async seed() {

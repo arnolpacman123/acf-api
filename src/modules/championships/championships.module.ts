@@ -3,6 +3,7 @@ import { ChampionshipsController } from '@championships/controllers/championship
 import { ChampionshipsService } from '@championships/services/championships.service';
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ChampionshipEntity } from "@championships/models/entities/championship.entity";
+import { ChampionshipRepository } from '@championships/models/repositories/championship.repository';
 
 @Module({
     imports: [
@@ -11,7 +12,7 @@ import { ChampionshipEntity } from "@championships/models/entities/championship.
         ]),
     ],
     controllers: [ ChampionshipsController ],
-    providers: [ ChampionshipsService ]
+    providers: [ ChampionshipRepository, ChampionshipsService ]
 })
 export class ChampionshipsModule {
 }

@@ -1,13 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 import { ClubEntity } from '@clubs/models/entities/club.entity';
-import { In, Repository } from 'typeorm';
+import { ClubRepository } from '@clubs/models/repositories/club.repository';
 
 @Injectable()
 export class ClubsService {
   constructor(
-    @InjectRepository(ClubEntity)
-    private readonly clubRepository: Repository<ClubEntity>,
+    private readonly clubRepository: ClubRepository,
   ) {}
 
   async findAll(): Promise<ClubEntity[]> {
@@ -30,18 +28,6 @@ export class ClubsService {
         ...rest,
         categories,
       };
-    });
-  }
-
-  async findByIds(ids: number[]): Promise<ClubEntity[]> {
-    return await this.clubRepository.findBy({
-      id: In(ids),
-    });
-  }
-
-  async findByNames(clubsNames: string[]) {
-    return await this.clubRepository.findBy({
-      name: In(clubsNames),
     });
   }
 

@@ -4,6 +4,7 @@ import { CategoriesService } from '@categories/services/categories.service';
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { CategoryEntity } from "@categories/models/entities/category.entity";
 import { ClubsModule } from "@clubs/clubs.module";
+import { CategoryRepository } from '@categories/models/repositories/category.repository';
 
 @Module({
     imports: [
@@ -11,7 +12,7 @@ import { ClubsModule } from "@clubs/clubs.module";
         ClubsModule,
     ],
     controllers: [ CategoriesController ],
-    providers: [ CategoriesService ],
+    providers: [ CategoryRepository, CategoriesService ],
     exports: [ CategoriesService ],
 })
 export class CategoriesModule {

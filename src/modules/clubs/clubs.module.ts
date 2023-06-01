@@ -3,6 +3,7 @@ import { ClubsController } from '@clubs/controllers/clubs.controller';
 import { ClubsService } from '@clubs/services/clubs.service';
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ClubEntity } from "@clubs/models/entities/club.entity";
+import { ClubRepository } from '@clubs/models/repositories/club.repository';
 
 @Module({
     imports: [
@@ -11,7 +12,7 @@ import { ClubEntity } from "@clubs/models/entities/club.entity";
         ]),
     ],
     controllers: [ ClubsController ],
-    providers: [ ClubsService ],
+    providers: [ ClubRepository, ClubsService ],
     exports: [ ClubsService ],
 })
 export class ClubsModule {
