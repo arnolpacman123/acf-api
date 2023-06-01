@@ -13,11 +13,22 @@ export class RegisteredTeamsService {
   ) {}
 
   async findAll(): Promise<RegisteredTeamEntity[]> {
-    return await this.registeredTeamRepository.find({
+    const registeredTeams = await this.registeredTeamRepository.find({
       relations: {
         championship: true,
-        clubCategory: true,
+        clubCategory: {
+          category: true,
+          club: true,
+        },
       },
+    });
+
+    return registeredTeams.map((registeredTeam) => {
+      const { championship, clubCategory } = registeredTeam;
+      return {
+        championship,
+        team: clubCategory,
+      };
     });
   }
 

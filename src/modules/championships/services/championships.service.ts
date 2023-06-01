@@ -19,6 +19,11 @@ export class ChampionshipsService {
       order: {
         id: 'DESC',
       },
+      relations: {
+        registeredTeams: {
+          clubCategory: true,
+        },
+      },
     });
   }
 
