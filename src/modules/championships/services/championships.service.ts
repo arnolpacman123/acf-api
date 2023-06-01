@@ -15,22 +15,10 @@ export class ChampionshipsService {
   ) {}
 
   async findAll(): Promise<ChampionshipEntity[]> {
-    const championships = await this.championshipRepository.find({
+    return await this.championshipRepository.find({
       order: {
         id: 'DESC',
       },
-    });
-
-    return championships.map((championship) => {
-      const { registeredTeams, ...rest } = championship;
-
-      return {
-        ...rest,
-        registeredTeams: registeredTeams.map((registeredTeam) => {
-          const { clubCategory } = registeredTeam;
-          return clubCategory;
-        }),
-      };
     });
   }
 
