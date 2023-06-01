@@ -4,6 +4,7 @@ import { UsersService } from '@users/services/users.service';
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { UserEntity } from "@users/models/entities/user.entity";
 import { ClubsModule } from "@clubs/clubs.module";
+import { UserRepository } from './models/repositories/user.repository';
 
 @Global()
 @Module({
@@ -14,7 +15,7 @@ import { ClubsModule } from "@clubs/clubs.module";
         ClubsModule,
     ],
     controllers: [ UsersController ],
-    providers: [ UsersService ],
+    providers: [ UserRepository, UsersService ],
     exports: [ UsersService ],
 })
 export class UsersModule {
