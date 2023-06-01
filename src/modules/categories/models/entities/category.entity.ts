@@ -2,13 +2,10 @@ import {
     Column,
     CreateDateColumn,
     Entity,
-    JoinTable,
-    ManyToMany,
     OneToMany,
     PrimaryGeneratedColumn,
     UpdateDateColumn
 } from "typeorm";
-import { ClubEntity } from "@clubs/models/entities/club.entity";
 import { ClubCategoryEntity } from "src/modules/clubs-categories/models/entities/club-category.entity";
 
 @Entity({

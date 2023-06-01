@@ -1,15 +1,15 @@
 import {
   Column,
+  CreateDateColumn,
   Entity,
   JoinColumn,
-  ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { OrganizationEntity } from '@organizations/models/entities/organization.entity';
-import { CategoryEntity } from '@categories/models/entities/category.entity';
-import { ClubCategoryEntity } from 'src/modules/clubs-categories/models/entities/club-category.entity';
+import { ClubCategoryEntity } from '@clubs-categories/models/entities/club-category.entity';
 
 @Entity({
   name: 'clubs',
@@ -22,6 +22,16 @@ export class ClubEntity {
     type: 'varchar',
   })
   name?: string;
+
+  @CreateDateColumn({
+    name: 'created_at',
+  })
+  createdAt?: Date;
+
+  @UpdateDateColumn({
+    name: 'updated_at',
+  })
+  updatedAt?: Date;
 
   @ManyToOne(() => ClubEntity, (club) => club.organization)
   @JoinColumn({
