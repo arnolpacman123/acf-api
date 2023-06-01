@@ -1,5 +1,5 @@
 import { JwtAuthGuard } from '@core/guards/jwt-auth.guard';
-import { Controller, Get, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { RegisteredTeamsService } from '@registered-teams/services/registered-teams.service';
 
 @UseGuards(JwtAuthGuard)
@@ -17,5 +17,10 @@ export class RegisteredTeamsController {
   @Get('seed')
   async seed() {
     return await this.registeredTeamsService.seed();
+  }
+
+  @Get(':id')
+  async findOne(@Param('id') id: number) {
+    return await this.registeredTeamsService.findOne(+id);
   }
 }
