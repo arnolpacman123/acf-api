@@ -13,7 +13,12 @@ export class RegisteredTeamsService {
   ) {}
 
   async findAll(): Promise<RegisteredTeamEntity[]> {
-    return await this.registeredTeamRepository.find();
+    return await this.registeredTeamRepository.find({
+      relations: {
+        championship: true,
+        clubCategory: true,
+      },
+    });
   }
 
   async seed() {
