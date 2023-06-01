@@ -11,7 +11,8 @@ import { ClubsModule } from "@clubs/clubs.module";
         ClubsModule,
     ],
     controllers: [ CategoriesController ],
-    providers: [ CategoriesService ]
+    providers: [ CategoriesService ],
+    exports: [ CategoriesService ],
 })
 export class CategoriesModule {
 }

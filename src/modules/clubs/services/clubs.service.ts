@@ -1,11 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from "@nestjs/typeorm";
-import { ClubEntity } from "@clubs/models/entities/club.entity";
-import { In, Repository } from "typeorm";
+import { InjectRepository } from '@nestjs/typeorm';
+import { ClubEntity } from '@clubs/models/entities/club.entity';
+import { In, Repository } from 'typeorm';
 
 @Injectable()
 export class ClubsService {
-
     constructor(
         @InjectRepository(ClubEntity)
         private readonly clubRepository: Repository<ClubEntity>,
@@ -14,13 +13,24 @@ export class ClubsService {
 
     async findAll(): Promise<ClubEntity[]> {
         return await this.clubRepository.find({
-            relations: [ 'organization', 'categories' ],
+            relations: {
+                organization: true,
+                clubCategories: {
+                    category: true,
+                },
+            },
         });
     }
 
     async findByIds(ids: number[]): Promise<ClubEntity[]> {
         return await this.clubRepository.findBy({
             id: In(ids),
+        });
+    }
+
+    async findByNames(clubsNames: string[]) {
+        return await this.clubRepository.findBy({
+            name: In(clubsNames),
         });
     }
 
@@ -47,7 +57,7 @@ export class ClubsService {
             { name: 'EL SEMILLERO' },
             { name: 'ELITE PSC' },
             { name: 'ESPERANZA' },
-            { name: 'ESTUDIANTES DEL NORTE I.' },
+            { name: 'ESTUDIANTES DEL NORTE I' },
             { name: 'FABRILES FC' },
             { name: 'FLORIDA' },
             { name: 'FORMANDO TALENTOS' },
@@ -55,7 +65,7 @@ export class ClubsService {
             { name: 'GUABIRA' },
             { name: 'GUARAYECO' },
             { name: 'INDEPENDENT' },
-            { name: 'INTERNACIONAL de SC' },
+            { name: 'INTERNACIONAL DE SC' },
             { name: 'JMP SOCCER' },
             { name: 'LA CANTERA' },
             { name: 'LA GUARDIA' },
@@ -100,5 +110,4 @@ export class ClubsService {
         ];
         return await this.clubRepository.save(clubs);
     }
-
 }

@@ -10,6 +10,7 @@ import { JwtModule, JwtService } from "@nestjs/jwt";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { jwtOptions } from "@constants/jwt-constants";
 import { typeOrmConfig } from "@constants/orm-config-options";
+import { ClubsCategoriesModule } from './modules/clubs-categories/clubs-categories.module';
 
 @Module({
     imports: [
@@ -20,6 +21,7 @@ import { typeOrmConfig } from "@constants/orm-config-options";
         OrganizationsModule,
         ClubsModule,
         CategoriesModule,
+        ClubsCategoriesModule,
     ],
     controllers: [ AppController ],
     providers: [ AppService, JwtService ],

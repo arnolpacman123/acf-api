@@ -1,30 +1,40 @@
-import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { OrganizationEntity } from "@organizations/models/entities/organization.entity";
-import { CategoryEntity } from "@categories/models/entities/category.entity";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToMany,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { OrganizationEntity } from '@organizations/models/entities/organization.entity';
+import { CategoryEntity } from '@categories/models/entities/category.entity';
+import { ClubCategoryEntity } from 'src/modules/clubs-categories/models/entities/club-category.entity';
 
 @Entity({
-    name: 'clubs'
+  name: 'clubs',
 })
 export class ClubEntity {
-    @PrimaryGeneratedColumn()
-    id?: number;
+  @PrimaryGeneratedColumn()
+  id?: number;
 
-    @Column({
-        type: 'varchar',
-    })
-    name: string;
+  @Column({
+    type: 'varchar',
+  })
+  name: string;
 
-    // TODO: Add organization and categories
-    @ManyToOne(
-        () => ClubEntity, (club) => club.organization,)
-    @JoinColumn({
-        name: 'organization_id',
-        referencedColumnName: 'id',
-    })
-    organization?: OrganizationEntity;
+  @ManyToOne(() => ClubEntity, (club) => club.organization)
+  @JoinColumn({
+    name: 'organization_id',
+    referencedColumnName: 'id',
+  })
+  organization?: OrganizationEntity;
 
-    @ManyToMany(
-        () => CategoryEntity, (category) => category.clubs,
-    )
-    categories?: CategoryEntity[];
+  // @ManyToMany(
+  //     () => CategoryEntity, (category) => category.clubs,
+  // )
+  // categories?: CategoryEntity[];
+
+  @OneToMany(() => ClubCategoryEntity, (clubCategory) => clubCategory.club)
+  clubCategories?: ClubCategoryEntity[];
 }

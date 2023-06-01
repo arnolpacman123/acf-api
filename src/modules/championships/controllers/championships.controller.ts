@@ -34,7 +34,6 @@ export class ChampionshipsController {
     return await this.championshipsService.create(championshipCreateDto);
   }
 
-  
   @Get('seed')
   async seed() {
     return await this.championshipsService.seed();
