@@ -4,9 +4,7 @@ import { CategoryRepository } from '@categories/models/repositories/category.rep
 
 @Injectable()
 export class CategoriesService {
-  constructor(
-    private readonly categoryRepository: CategoryRepository,
-  ) {}
+  constructor(private readonly categoryRepository: CategoryRepository) {}
 
   async findAll(): Promise<CategoryEntity[]> {
     const categories = await this.categoryRepository.find({
