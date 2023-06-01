@@ -32,27 +32,6 @@ export class RegisteredTeamsService {
     });
   }
 
-  async findOne(id: number): Promise<RegisteredTeamEntity> {
-    const registeredTeam = await this.registeredTeamRepository.findOne({
-      where: {
-        id,
-      },
-      relations: {
-        championship: true,
-        clubCategory: {
-          category: true,
-          club: true,
-        },
-      },
-    });
-
-    const { championship, clubCategory } = registeredTeam;
-    return {
-      championship,
-      team: clubCategory,
-    } as RegisteredTeamEntity;
-  }
-
   async seed() {
     const clubCategories = await this.ClubCategoryRepository.find();
     const championships = await this.championshipRepository.find();

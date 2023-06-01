@@ -66,7 +66,12 @@ export class ChampionshipsService {
     id: number,
     championshipUpdateDto: ChampionshipUpdateDto,
   ): Promise<ChampionshipEntity> {
-    const championship: ChampionshipEntity = await this.findOne(id);
+    const championship: ChampionshipEntity =
+      await this.championshipRepository.findOne({
+        where: {
+          id,
+        },
+      });
     championship.name = championshipUpdateDto.name;
     championship.description = championshipUpdateDto.description;
     championship.startDate = championshipUpdateDto.startDate;
@@ -74,10 +79,28 @@ export class ChampionshipsService {
   }
 
   async findOne(id: number) {
-    return await this.championshipRepository.findOne({
+    const championship = await this.championshipRepository.findOne({
       where: {
         id,
       },
+      relations: {
+        registeredTeams: {
+          clubCategory: {
+            club: true,
+            category: true,
+          },
+        },
+      },
     });
+
+    const { registeredTeams, ...rest } = championship;
+
+    return {
+      ...rest,
+      registeredTeams: registeredTeams.map((registeredTeam) => {
+        const { clubCategory } = registeredTeam;
+        return clubCategory;
+      }),
+    };
   }
 }

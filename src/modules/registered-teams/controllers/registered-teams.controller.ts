@@ -18,9 +18,4 @@ export class RegisteredTeamsController {
   async seed() {
     return await this.registeredTeamsService.seed();
   }
-
-  @Get(':id')
-  async findOne(@Param('id') id: number) {
-    return await this.registeredTeamsService.findOne(+id);
-  }
 }
